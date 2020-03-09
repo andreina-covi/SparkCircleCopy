@@ -1,0 +1,51 @@
+Class {
+	#name : #RTGitTreeLayout,
+	#superclass : #RTTreeLayout,
+	#instVars : [
+		'size'
+	],
+	#category : #SparkNode
+}
+
+{ #category : #hook }
+RTGitTreeLayout >> doPost: elements [
+	| yo max |
+	super doPost: elements.
+	yo := self topGap.
+	max := (elements collect: [ :e | e position x ]) max.
+	elements
+		do: [ :each | 
+			each translateTo: (max - each position x) @ yo.
+			yo := yo + size ]
+]
+
+{ #category : #initalize }
+RTGitTreeLayout >> initialize [
+	super initialize.
+	size := 30.
+]
+
+{ #category : #hook }
+RTGitTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer: aNumber [
+	| treeSize childrenPosition x y middleOfTree |
+	aNodeCollection isEmpty
+		ifTrue: [ ^ 0 ].
+	x := aPoint x.
+	y := aPoint y.
+	alreadyLayoutedNodes addAll: aNodeCollection.
+	self atLayer: aNumber add: aNodeCollection.
+	aNodeCollection
+		do: [ :each | 
+			childrenPosition := y + each height + self verticalGap.
+			treeSize := each width
+				max:
+					(self
+						layout: (self computeChildrenFor: each)
+						atPoint: x @ childrenPosition
+						atLayer: aNumber + 1).
+			middleOfTree := x "+ (treeSize / 2.0)" - (each width / 2.0).
+			translator translateTopLeftOf: each to: middleOfTree @ y.
+			x := x + treeSize + self horizontalGap.
+			self step ].
+	^ x - aPoint x - self horizontalGap
+]
