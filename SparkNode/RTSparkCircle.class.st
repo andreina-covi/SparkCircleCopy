@@ -14,13 +14,13 @@ Class {
 }
 
 { #category : #accessing }
-RTSparkCircle >> color: aBlock [
-	colorBlock := aBlock
+RTSparkCircle >> colorBlock [
+	^ colorBlock
 ]
 
 { #category : #accessing }
-RTSparkCircle >> colorBlock [
-	^ colorBlock
+RTSparkCircle >> colorBlock: aBlock [ 
+	colorBlock := aBlock
 ]
 
 { #category : #initalize }
