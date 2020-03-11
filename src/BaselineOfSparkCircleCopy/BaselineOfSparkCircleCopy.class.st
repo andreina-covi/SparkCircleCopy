@@ -10,6 +10,9 @@ BaselineOfSparkCircleCopy >> baseline: spec [
 	spec
 		for: #common
 		do: [ spec
+				baseline: 'Roassal2'
+				with: [ spec repository: 'github://ObjectProfile/Roassal2/src' ].
+		      spec
 				package: 'SparkNode'
     ]
 ]
