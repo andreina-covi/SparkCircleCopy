@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #baselines }
-BaselineOfSpyLite >> baseline: spec [
+BaselineOfSparkCircleCopy >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
